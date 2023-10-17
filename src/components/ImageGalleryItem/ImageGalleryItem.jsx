@@ -2,11 +2,10 @@ import React from 'react';
 import './ImageGalleryItem.css';
 
 const ImageGalleryItem = ({ image, onClick }) => (
-  <li className="gallery-item">
+  <li className="ImageGalleryItem">
     <img
       src={image.webformatURL}
       alt={image.tags}
-      className="gallery-image"
       onClick={() => onClick(image.largeImageURL)}
     />
   </li>

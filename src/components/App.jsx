@@ -3,9 +3,8 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
-import Loader from './Loader/Loader';
-import { fetchImages } from './Api/api'; // Напишіть функцію для отримання даних з API
-import './Api/api';
+
+import { fetchImages } from './Api/api'; // Файл для отримання даних з API
 
 class App extends Component {
   state = {

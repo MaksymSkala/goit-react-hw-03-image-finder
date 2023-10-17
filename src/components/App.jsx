@@ -3,6 +3,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
+import 'index.css';
 
 import { fetchImages } from './Api/api'; // Файл для отримання даних з API
 

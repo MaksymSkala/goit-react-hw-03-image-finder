@@ -5,7 +5,8 @@ import Button from './Button/Button';
 import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
 import { fetchImages } from '../Api/api';
-import 'index.css';
+import '../components/index.css';
+import '../components/App.css';
 
 class App extends Component {
   state = {
@@ -20,9 +21,9 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchImages();
-    }
 
-    console.log('Current state:', this.state);
+      console.log('Current state:', this.state);
+    }
   }
 
   fetchImages = () => {

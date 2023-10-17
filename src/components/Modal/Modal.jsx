@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Modal.css';
+import 'components/index.css';
 
 class Modal extends Component {
   componentDidMount() {
@@ -25,8 +26,8 @@ class Modal extends Component {
   render() {
     const { image } = this.props;
     return (
-      <div className="Overlay" onClick={this.handleOverlayClick}>
-        <div className="Modal">
+      <div className="overlay" onClick={this.handleOverlayClick}>
+        <div className="modal">
           <img src={image} alt="Large" />
         </div>
       </div>

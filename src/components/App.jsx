@@ -7,7 +7,6 @@ import Loader from './Loader/Loader';
 import { fetchImages } from '../Api/api';
 import 'index.css';
 
-
 class App extends Component {
   state = {
     searchQuery: '',
@@ -22,6 +21,8 @@ class App extends Component {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchImages();
     }
+
+    console.log('Current state:', this.state);
   }
 
   fetchImages = () => {

@@ -15,6 +15,7 @@ class App extends Component {
     loading: false,
     error: null,
     largeImageURL: '',
+    hasMoreImages: true,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -24,7 +25,11 @@ class App extends Component {
   }
 
   fetchImages = () => {
-    const { searchQuery, page } = this.state;
+    const { searchQuery, page, hasMoreImages } = this.state;
+
+    if (!hasMoreImages) {
+      return;
+    }
 
     this.setState({ loading: true });
 
@@ -33,6 +38,7 @@ class App extends Component {
         this.setState((prevState) => ({
           images: [...prevState.images, ...data.hits],
           page: prevState.page + 1,
+          hasMoreImages: data.hits.length > 0,
         }));
       })
       .catch((error) => this.setState({ error }))
@@ -40,7 +46,7 @@ class App extends Component {
   };
 
   handleSearchFormSubmit = (query) => {
-    this.setState({ searchQuery: query, page: 1, images: [] });
+    this.setState({ searchQuery: query, page: 1, images: [], hasMoreImages: true });
   };
 
   handleImageClick = (largeImageURL) => {
@@ -52,13 +58,15 @@ class App extends Component {
   };
 
   render() {
-    const { images, loading, largeImageURL } = this.state;
+    const { images, loading, largeImageURL, hasMoreImages } = this.state;
     return (
       <div>
         <Searchbar onSubmit={this.handleSearchFormSubmit} />
         {loading && <Loader />}
         <ImageGallery images={images} onClick={this.handleImageClick} />
-        {images.length > 0 && !loading && <Button onClick={this.fetchImages} />}
+        {images.length > 0 && !loading && hasMoreImages && (
+          <Button onClick={this.fetchImages} />
+        )}
         {largeImageURL && (
           <Modal image={largeImageURL} onClose={this.handleCloseModal} />
         )}

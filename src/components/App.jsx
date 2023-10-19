@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
-import Button from './Button/Button';
 import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
 import { fetchImages } from '../Api/api';
@@ -35,11 +34,14 @@ class App extends Component {
 
     fetchImages(searchQuery, page)
       .then((data) => {
-        this.setState((prevState) => ({
-          images: [...prevState.images, ...data.hits],
-          page: prevState.page + 1,
-          hasMoreImages: data.hits.length > 0,
-        }));
+        if (data.hits.length === 0) {
+          this.setState({ hasMoreImages: false });
+        } else {
+          this.setState((prevState) => ({
+            images: [...prevState.images, ...data.hits],
+            page: prevState.page + 1,
+          }));
+        }
       })
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }));
@@ -63,9 +65,13 @@ class App extends Component {
       <div>
         <Searchbar onSubmit={this.handleSearchFormSubmit} />
         {loading && <Loader />}
-        <ImageGallery images={images} onClick={this.handleImageClick} />
-        {images.length > 0 && !loading && hasMoreImages && (
-          <Button onClick={this.fetchImages} />
+        {images.length > 0 && (
+          <ImageGallery images={images} onClick={this.handleImageClick} />
+        )}
+        {hasMoreImages && images.length > 0 && images.length % 12 === 0 && !loading && (
+          <button type="button" className="button" onClick={this.fetchImages}>
+            Load more
+          </button>
         )}
         {largeImageURL && (
           <Modal image={largeImageURL} onClose={this.handleCloseModal} />
